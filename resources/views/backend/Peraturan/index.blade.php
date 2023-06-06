@@ -6,9 +6,11 @@
                 <div class="card">
                     <div class="card-header">
                         Data Peraturans
-                        <a class="btn btn-primary btn-sm float-end" href="{{ route('peraturans.create') }}"
-                            role="button">Tambah
-                            Peraturans</a>
+                        @can('create', App\Models\Peraturan::class)
+                            <a class="btn btn-primary btn-sm float-end" href="{{ route('peraturans.create') }}"
+                                role="button">Tambah
+                                Peraturans</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
@@ -27,15 +29,19 @@
                                         <td>{{ $peraturan->nama }}</td>
                                         <td>{!! html_entity_decode($peraturan->keterangan) !!}</td>
                                         <td>
-                                            <a class="btn btn-warning btn-sm m-2"
-                                                href="/peraturans/{{ $peraturan->id }}/edit">Edit</a>
-                                            <form action="/peraturans/{{ $peraturan->id }}" method="POST" class="d-inline">
-                                                @method('delete')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm border-0"
-                                                    onclick="return confirm('Are You Sure?')">Delete <span
-                                                        data-feather="x-circle"></button>
-                                            </form>
+                                            @can('update', $peraturan)
+                                                <a class="btn btn-warning btn-sm m-2"
+                                                    href="/peraturans/{{ $peraturan->id }}/edit">You User Manage</a>
+                                            @endcan
+                                            @can('delete', $peraturan)
+                                                <form action="/peraturans/{{ $peraturan->id }}" method="POST" class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm border-0"
+                                                        onclick="return confirm('Are You Sure?')">Delete <span
+                                                            data-feather="x-circle"></button>
+                                                </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

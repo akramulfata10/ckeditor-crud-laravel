@@ -8,6 +8,14 @@ use App\Models\Peraturan;
 
 class PeraturanController extends Controller
 {
+
+    /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Peraturan::class, 'peraturan');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -47,6 +55,7 @@ class PeraturanController extends Controller
      */
     public function edit(Peraturan $peraturan)
     {
+
         return view('backend.peraturan.edit', compact('peraturan'));
     }
 
